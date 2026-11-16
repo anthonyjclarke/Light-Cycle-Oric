@@ -1,0 +1,16 @@
+# Build output
+c64/build/
+*.o
+*.prg
+*.d64
+*.bin
+*.elf
+
+# Generated from CYCLE.TAP by `make oric`
+oric/*.bin
+
+# OS / editor
+.DS_Store
+.pio/
+node_modules/
+secrets.h

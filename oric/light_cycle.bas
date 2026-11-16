@@ -1,0 +1,6 @@
+10 REM \\  Light  Cycle  //
+20 REM
+30 REM      16K OR 48K
+40 TEXT:INK7:PAPER0
+50 CALL #900
+60 CLOAD""
