@@ -3,7 +3,7 @@
 #   make          build c64/build/lightcycle.prg
 #   make d64      disk image
 #   make run      launch in VICE
-#   make smoke    headless boot in VICE, screenshot to c64/build/smoke.png
+#   make smoke    headless boot in VICE, screenshots to c64/build/
 #   make oric     regenerate + verify the Oric disassembly from CYCLE.TAP
 
 AS      := ca65
@@ -16,7 +16,7 @@ BUILD   := c64/build
 CFG     := c64/cfg/c64.cfg
 
 # basic_stub must link first so main's CODE starts at $080D (SYS 2061)
-SOURCES := basic_stub.s main.s
+SOURCES := basic_stub.s main.s platform.s video.s plot.s timing.s input.s sound.s zp.s
 OBJECTS := $(addprefix $(BUILD)/,$(SOURCES:.s=.o))
 INCLUDES := $(wildcard $(SRC_DIR)/*.inc)
 
@@ -24,8 +24,6 @@ PRG     := $(BUILD)/lightcycle.prg
 D64     := $(BUILD)/lightcycle.d64
 MAP     := $(BUILD)/lightcycle.map
 LABELS  := $(BUILD)/lightcycle.lbl
-
-SMOKE_CYCLES := 4000000
 
 .PHONY: all prg d64 run smoke oric clean
 
@@ -48,12 +46,9 @@ $(D64): $(PRG)
 run: $(PRG)
 	$(VICE) -moncommands $(LABELS) -autostart $(PRG)
 
-# Boots the .prg with no UI and writes a screenshot after SMOKE_CYCLES cycles.
+# Boots the .prg headless in VICE and saves each capture (docs/tools/capture_screens.py) to c64/build/.
 smoke: $(PRG)
-	$(VICE) -default -console -warp -sounddev dummy \
-	  -limitcycles $(SMOKE_CYCLES) -exitscreenshot $(BUILD)/smoke.png \
-	  -autostartprgmode 1 -autostart $(PRG) >$(BUILD)/smoke.log 2>&1 || true
-	@test -f $(BUILD)/smoke.png && echo "smoke: $(BUILD)/smoke.png" || (echo "smoke: no screenshot"; exit 1)
+	python3 docs/tools/capture_screens.py --out $(BUILD)
 
 oric:
 	python3 tools/tap_extract.py CYCLE.TAP oric

@@ -1,0 +1,48 @@
+{
+    "output": "docs/LIGHT_CYCLE.html",
+    "title": "Light Cycle",
+    "brand": [
+        "LIGHT CYCLE",
+        "Oric · C64"
+    ],
+    "logo": "docs/images/graphics/bike-icon.png",
+    "logoAlt": "The status-row light cycle, decoded from the Oric game's glyphs",
+    "retroFont": {
+        "text": "docs/tools/fonts/C64_Pro-STYLE.woff2",
+        "mono": "docs/tools/fonts/C64_Pro_Mono-STYLE.woff2",
+        "textFamily": "C64 Pro",
+        "monoFamily": "C64 Pro Mono",
+        "labelOff": "Switch to the C64 font",
+        "labelOn": "Switch to the standard font",
+        "credit": "C64 Pro and C64 Pro Mono fonts © 2010–2019 Style (style64.org/c64-truetype), embedded unmodified with @font-face as their licence allows."
+    },
+    "description": "Light Cycle (Oric, A.J. Clarke, PSS) disassembled and ported to the Commodore 64: play, architecture, data formats, graphics, sound, the source and toolchain, the port plan and the C64 platform layer.",
+    "includes": "figures decoded from the Oric tape, VICE screenshots of the C64 build, and diagrams",
+    "groups": [
+        {
+            "id": "guide",
+            "label": "The game and its code",
+            "sources": [
+                "docs/README.md",
+                "docs/player_guide.md",
+                "docs/graphics.md",
+                "docs/sound.md",
+                "docs/architecture.md",
+                "docs/data_formats.md",
+                "docs/source_guide.md"
+            ]
+        },
+        {
+            "id": "reference",
+            "label": "Reference",
+            "sources": [
+                "docs/porting.md",
+                "docs/platform_layer.md",
+                "docs/quirks.md",
+                "CHANGELOG.md",
+                "docs/html_documentation.md",
+                "docs/credits.md"
+            ]
+        }
+    ]
+}

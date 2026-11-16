@@ -1,0 +1,3 @@
+# Words in code spans that look like labels but are not source names.
+retroFont
+DOCS_PYTHON
