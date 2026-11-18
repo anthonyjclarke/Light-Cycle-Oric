@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Draw the figures for the Oric appendix (oric.md) into docs/images/graphics/.
+"""Draw the figures for the Oric Tech Specs appendix (oric_specs.md) into docs/images/graphics/.
 
   python3 docs/tools/render_oric.py
 

@@ -1,44 +1,10 @@
-# Light Cycle – Appendix: The Oric
+# Oric Tech Specs
 
-An introduction to the machine *Light Cycle* was written for, for readers who know the C64 but not the Oric. The
-history and specifications come from the published sources under [Further Reading](#further-reading); the details of
-the screen and the sound chip are read from this repository's disassembly wherever it uses them, and the figures are
-drawn by `docs/tools/render_oric.py`. The BASIC examples were run on the Atmos ROM (BASIC 1.1) in the Auric emulator:
-all ran without errors, and the drawings and the `POKE` came out as described.
-
----
-
-## History
-
-The Oric came from Tangerine Computer Systems, a Cambridgeshire company founded by Paul Johnson and Barry Muncaster
-that had made the Microtan 65, a 6502 kit computer. After the success of Sinclair's ZX Spectrum, Tangerine set up Oric
-Products International to build a cheap colour home computer around the same 6502, and the result was the Oric-1.
-
-| Year | Event                                                      |
-|:-----|:-----------------------------------------------------------|
-| 1982 | Oric-1 launched in the UK: £129 (16K), £169 (48K)          |
-| 1983 | ~160,000 sold in the UK and ~50,000 in France              |
-| 1983 | France's best-selling home computer that year              |
-| 1983 | Late in the year, Edenspring Investments funds the company |
-| 1984 | Oric Atmos (February): real keyboard, ROM V1.1             |
-| 1984 | Microdisc drive, MCP-40 colour plotter, modem released     |
-| 1985 | Stratos announced (February); receivership the next day    |
-| 1985 | Bought by the French firm Eureka                           |
-| 1986 | Telestrat: 64K, disk standard, sold mostly in France       |
-| 1987 | Second and final receivership (December)                   |
-
-The Oric-1 sold on its price and its colour graphics, against the Spectrum's attribute clash and the higher prices of
-the BBC Micro and the C64. Its weak points were the "chiclet" rubber keyboard, an unreliable tape loader and a buggy
-first ROM; the Atmos fixed the keyboard and most of the ROM, though not every early program runs on it. In the UK the
-machine faded quickly after 1984. In France it stayed popular for several years, which is why so much later Oric
-software, and the Telestrat, is French. Compatible clones carried on in Eastern Europe, the best known being Bulgaria's
-Pravetz 8D.
-
-*Light Cycle* belongs to the first wave of Oric-1 software: written in 1983 and published on tape by PSS of Coventry,
-one of the first companies to support the machine ([original_release.md](original_release.md)).
-
-The community is still active. The Oric.org archive catalogues the software, Defence Force hosts the main forum and
-documentation library, and emulators such as Oricutron run the original tapes, this one included.
+The hardware of the Oric-1 and Atmos for readers who know the C64: the parts, the memory map, how the screen and the
+sound chip work, and how to run Oric software today. The story of the machines is in the previous appendix, [History of
+Oric](oric_history.md). The figures are drawn by `docs/tools/render_oric.py`, and the BASIC examples were run on the
+Atmos ROM (BASIC 1.1) in the Auric emulator: all ran without errors, and the drawings and the `POKE` came out as
+described.
 
 ---
 
@@ -59,9 +25,33 @@ documentation library, and emulators such as Oricutron run the original tapes, t
 | Other ports | Centronics printer, expansion edge connector       |
 | Power       | External 9 V supply                                |
 
+### The Models
+
+Every Oric shares the same core: a 6502A, the ULA's video and the AY sound chip. The models differ in RAM, ROM and
+keyboard:
+
+| Model         | Year | RAM      | ROM and keyboard                          |
+|:--------------|:-----|:---------|:------------------------------------------|
+| Oric-1        | 1982 | 16K, 48K | BASIC 1.0; small hard-key keyboard        |
+| Atmos         | 1984 | 48K      | BASIC 1.1; full-travel keyboard           |
+| Stratos       | 1985 | 64K      | Shown at Frankfurt; became the Telestrat  |
+| Telestrat     | 1986 | 64K      | Disk drive, Minitel port, cartridges      |
+| Pravetz 8D    | 1985 | 48K      | Atmos clone; Latin and Cyrillic ROM       |
+
+### Storage
+
+| Device    | Medium                  | Notes                                               |
+|:----------|:------------------------|:----------------------------------------------------|
+| Cassette  | Audio tape, `.tap` file | 2400 baud by default; 300 baud with `,S` (slow)     |
+| Microdisc | 3-inch floppy           | Oric's drive, 1984; Oric DOS, later SEDORIC         |
+| Jasmin    | Floppy                  | French third-party drive with its own DOS (TDOS)    |
+
+Disk systems page the BASIC ROM out to use the 16K of RAM under it, which is why only 48K of the 64K fitted is free
+from BASIC. The Telestrat came with a drive as standard.
+
 ### Memory Map
 
-The map of a 48K machine, as the ROM and this game use it:
+The map of a 48K machine, as the ROM uses it:
 
 | Range         | Holds                                           |
 |:--------------|:------------------------------------------------|
@@ -145,11 +135,6 @@ Both character sets are in RAM, so every character can be redefined: a game can 
 graphics and still have letters in the standard set. Double height prints the top half of each character on even
 rows and the bottom half on odd rows, so a double-height line is the same text written on two rows.
 
-HIRES is what *Light Cycle* uses: the arena on the 240 × 200 bitmap, the scores and timer in the three text rows
-underneath, set out with serial attributes.
-
-![The Oric game screen: HIRES arena and the three text rows below it](images/original/oric-game-screen.png)
-
 ### From BASIC
 
 Oric BASIC has commands for each mode. HIRES draws with a graphics cursor; the last parameter is the foreground mode
@@ -166,6 +151,11 @@ Oric BASIC has commands for each mode. HIRES draws with a graphics cursor; the l
 
 `TEXT` returns to text mode and `LORES 0` or `LORES 1` selects block graphics with the standard or alternate set.
 Attributes can be poked straight into the screen: `POKE #BB80+40*5,17` makes row 5 red paper from its first cell.
+
+The program above as Auric draws it. The three text rows keep their own paper and ink, set by BASIC, and the `PRINT`
+output has scrolled away, leaving `Ready`:
+
+![The HIRES example running in Auric: circle, frame, inverted marks and the text rows](images/graphics/oric-basic-hires.png)
 
 ---
 
@@ -197,8 +187,8 @@ of two; the ZX Spectrum 128 and the Amstrad CPC use the same part. On the Oric i
 | R13      | Envelope shape                                              |
 | R14      | I/O port A                                                  |
 
-One envelope cycle lasts 256 × period µs at 1 MHz: from 0.26 ms to about 16.8 s. *Light Cycle*'s explosion uses
-period `$1904`, a single fall of about 1.6 s ([sound.md](sound.md)).
+One envelope cycle lasts 256 × period µs at 1 MHz: from 0.26 ms to about 16.8 s. A period of `$1904` (6404), for
+example, gives a single fall of about 1.6 s, long enough for an explosion.
 
 ![The sixteen envelope shapes, R13 = 0 to 15 row by row](images/graphics/oric-envelopes.png)
 
@@ -209,7 +199,7 @@ attack (2), alternate (1) and hold (0).
 
 The AY is not memory-mapped. Its data bus hangs off the VIA's port A and its two bus-control lines off the VIA's CA2
 and CB2 outputs (set through the PCR at `$030C`), so every register write is two VIA operations: select the register,
-then write the value. *Light Cycle*'s `AyWrite` does exactly that. Because the keyboard's column lines come from the
+then write the value. Because the keyboard's column lines come from the
 AY's own I/O port, reading the keyboard also goes through the AY, which is why R7 bit 6 must stay set.
 
 ### From BASIC
@@ -227,21 +217,10 @@ mode,period` switches channels on (bit masks) and starts the envelope. A volume 
 
 ---
 
-## How Light Cycle Uses the Oric
+## Running Oric Software in an Emulator
 
-The game makes no ROM calls during play. `RoundStart` masks interrupts and `ViaGameSetup` turns off the VIA's 100 Hz
-timer, so the keys are read straight from the matrix (`ReadKeysP1`, `ReadKeysP2`) through VIA port B and AY port A;
-`ViaRestoreRom` puts the timer back for the menus. The arena is HIRES with a paper attribute in column 0 of every line,
-and the status rows use ink, paper and double-height attributes (`DrawStatusLine`, `TimeAttrL`). All the sound is AY
-register writes through `AyWrite` and `AyLoadAll`. [architecture.md](architecture.md) has the full detail, and
-[porting.md](porting.md) how each part maps onto the C64.
-
----
-
-## Running the Original in an Emulator
-
-The original tape runs in any Oric emulator that reads `.tap` files. Two good choices are
-[Auric](https://github.com/pugo/Auric), used to check this appendix's BASIC examples, and
+Oric tapes, saved as `.tap` files, run in any Oric emulator that reads them. Two good choices are
+[Auric](https://github.com/pugo/Auric), used to check the BASIC examples above, and
 [Oricutron](https://github.com/pete-gordon/oricutron), the long-standing multi-platform emulator.
 
 ### The ROMs
@@ -271,11 +250,11 @@ cd Auric && mkdir build && cd build && cmake .. && make -j10
 ```
 
 Run it from the `Auric` folder, since it reads `auric.yaml` and `ROMS/` from the current directory. The binary may be
-`build/auric` or `build/src/auric`, depending on the build. `--oric1` selects the Oric-1 ROM, the machine *Light Cycle*
-was written for (the default is the Atmos), and `--tape` loads and starts a tape:
+`build/auric` or `build/src/auric`, depending on the build. `--oric1` selects the Oric-1 ROM (the default is the Atmos),
+which early tapes written for the Oric-1 may need, and `--tape` loads and starts a tape:
 
 ```bash
-cd Auric && ./build/src/auric --oric1 --tape /path/to/LightCycle/CYCLE.TAP
+cd Auric && ./build/src/auric --oric1 --tape /path/to/game.tap
 ```
 
 F1 opens Auric's menu (settings, tape and disk images, rewind), Shift-Ctrl-W toggles warp speed and Shift-Ctrl-R
@@ -285,14 +264,11 @@ resets. On a real Oric, or with autostart turned off, type `CLOAD""` and press R
 
 ## Further Reading
 
-| Resource                                                                                             | What it offers                                   |
-|:-----------------------------------------------------------------------------------------------------|:-------------------------------------------------|
-| [Oric (computer), Wikipedia](https://en.wikipedia.org/wiki/Oric_(computer))                          | History, models, specifications, sales           |
-| [History of the Oric Home Computer](https://quantumzeitgeist.com/history-of-the-oric-home-computer/) | Readable overview; check dates against Wikipedia |
-| [The Oric Site (oric.org)](https://www.oric.org/)                                                    | Software archive, screenshots, cover scans       |
-| [Light Cycle on oric.org](https://www.oric.org/software/light_cycle-1432.html)                       | This game's entry                                |
-| [Defence Force](https://www.defence-force.org/computing/oric/index.htm)                              | Hardware notes, manuals library, forum           |
-| [Oricutron](https://github.com/pete-gordon/oricutron)                                                | Emulator: Oric-1, Atmos, Telestrat, Pravetz      |
-| [Auric](https://github.com/pugo/Auric)                                                               | Emulator: Oric-1, Atmos, Microdisc, debugger     |
-| [Oric ROM archive](http://oric.free.fr/ROMS/)                                                        | BASIC 1.0 and 1.1, Microdisc and other ROMs      |
-| [AY-3-8910, Wikipedia](https://en.wikipedia.org/wiki/General_Instrument_AY-3-8910)                   | The sound chip family and its registers          |
+| Resource                                                                           | What it offers                                  |
+|:-----------------------------------------------------------------------------------|:------------------------------------------------|
+| [Oric (computer), Wikipedia](https://en.wikipedia.org/wiki/Oric_(computer))        | Specifications of each model                    |
+| [Defence Force](https://www.defence-force.org/computing/oric/index.htm)            | Hardware notes, manuals library, forum          |
+| [Oricutron](https://github.com/pete-gordon/oricutron)                              | Emulator: Oric-1, Atmos, Telestrat, Pravetz     |
+| [Auric](https://github.com/pugo/Auric)                                             | Emulator: Oric-1, Atmos, Microdisc, debugger    |
+| [Oric ROM archive](http://oric.free.fr/ROMS/)                                      | BASIC 1.0 and 1.1, Microdisc and other ROMs     |
+| [AY-3-8910, Wikipedia](https://en.wikipedia.org/wiki/General_Instrument_AY-3-8910) | The sound chip family and its registers         |

@@ -22,6 +22,15 @@
 
 ### Changed
 
+- The Oric appendix moves out of Reference into its own Appendix group in the handbook and index, and splits in two.
+  `oric_history.md` ("History of Oric") is expanded into the full story: Tangerine and the Microtan, the Oric-1 and its
+  French success, the 1983 factory fire, Edenspring and the Atmos, the peripherals, the Stratos and the receivers,
+  Eureka and the Telestrat, the Pravetz 8D and Nova 64 clones, software and magazines, a timeline and today's community
+  and hardware. `oric_specs.md` ("Oric Tech Specs") takes the specifications, memory map, graphics, sound and emulator
+  sections, with new tables of the models and their storage. Both are general information on the Oric, with no game
+  named, and the same files in every Oric reconstruction; the game's own screen gives way to an Auric capture of the
+  HIRES BASIC example (`oric-basic-hires.png`). The founders are corrected to Paul Johnson, Mark Rainer and Nigel Penton
+  Tilbury, with Barry Muncaster joining later.
 - The status panels follow the Oric's status rows, as the review photographs show them: `TIME` in black on a white box
   over double-height digits on green, `P1` yellow and `P2` / `CPU` cyan beside the cycle icon, lives under the icon,
   score under the name, all at the foot of the panel on the round's paper colour (`ArenaPaper`). The `SCORE`, `LIVES`

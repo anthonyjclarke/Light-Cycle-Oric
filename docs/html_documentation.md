@@ -63,7 +63,9 @@ regenerates it whenever a source changes. `just docs-graphics` and `just docs-sc
   Oric ROM font is not on the tape); the status comparison crops the C64 side from the demo capture, so run it after
   the screen captures. The figures are deterministic.
 - **Oric appendix figures.** `render_oric.py` draws the palette, a HIRES line of serial attributes and the AY's
-  envelope shapes for `oric.md`. It reads nothing from the game, so the file is the same in every Oric reconstruction.
+  envelope shapes for `oric_specs.md`. It reads nothing from the game, so the file is the same in every Oric reconstruction.
+- **Oric appendix screenshot.** `oric-basic-hires.png` is a capture of `oric_specs.md`'s HIRES BASIC example running in the
+  Auric emulator on the Atmos ROM; it is not generated, so re-render it by hand if the example changes.
 
 ---
 

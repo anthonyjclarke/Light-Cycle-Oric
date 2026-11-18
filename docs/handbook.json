@@ -40,10 +40,17 @@
                 "docs/porting.md",
                 "docs/platform_layer.md",
                 "docs/quirks.md",
-                "docs/oric.md",
                 "CHANGELOG.md",
                 "docs/html_documentation.md",
                 "docs/credits.md"
+            ]
+        },
+        {
+            "id": "appendix",
+            "label": "Appendix",
+            "sources": [
+                "docs/oric_history.md",
+                "docs/oric_specs.md"
             ]
         }
     ]
