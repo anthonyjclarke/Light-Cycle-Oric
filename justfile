@@ -22,6 +22,7 @@ docs_py := `echo "${DOCS_PYTHON:-$(command -v python3.14 || echo python3)}"`
 docs: oric build
     {{docs_py}} docs/tools/capture_screens.py
     {{docs_py}} docs/tools/render_graphics.py
+    {{docs_py}} docs/tools/render_oric.py
     node docs/tools/build_docs.mjs
 
 # Regenerate docs/LIGHT_CYCLE.html from the Markdown and the current images only.
@@ -43,6 +44,7 @@ docs-screens: build
 # Re-render the figures decoded from the Oric tape (deterministic).
 docs-graphics:
     {{docs_py}} docs/tools/render_graphics.py
+    {{docs_py}} docs/tools/render_oric.py
 
 # Fail if a chapter names a label that is not in the source.
 docs-names:

@@ -15,6 +15,13 @@ After loading, the title screen explains the keys. The game then asks, in order:
    (`AskPlayers`).
 3. **Speed.** `1` (fast) to `9` (slow): it sets the per-frame delay (`AskSpeed`, `FrameDelay`).
 
+On the C64 the game opens with a picture after the original cassette inlay, then the instructions, then a demo of the
+computer playing itself; `1`, SPACE or fire starts a one-player game and `2` a two-player one from any of them. Until
+the menus are ported (Phase 4) the volume is fixed at 10 and the speed at 5, and RUN/STOP ends a game. The scores, lives
+and `TIME` are in a panel on each side of the arena, laid out like the Oric's status rows: player 1 on the left,
+player 2 on the right. When a player runs out of lives the winner's name flashes, then the game returns to the intro
+(the hi-score table arrives in Phase 4).
+
 ---
 
 ## Controls
@@ -37,10 +44,10 @@ player 2, with fire as boost (`ReadKeysP1`, `ReadKeysP2` in `c64/src/input.s`).
 Each player rides a light cycle that leaves a permanent trail. Touching any lit pixel crashes. Player 1 starts at x=25
 heading right, player 2 at x=215 heading left, both at random heights (`RandomStarts`).
 
-The arena is a one-pixel frame (x 6–239, y 0–199) with eight random-length diagonal walls aimed at the centre
-(`DrawObstacles`), on a random paper colour: red, blue, magenta or black (`SetPaperColour`). Every 255 frames
-`BonusBlocks` tries a random empty 6×6 spot and animates a block there; the last frame stays as a new obstacle, so the
-arena slowly fills.
+The arena is a one-pixel frame (x 6–239, y 0–199) with a V-shaped wedge of random size at the middle of each wall,
+pointing inward (`DrawObstacles`), on a random paper colour: red, blue, magenta or black (`SetPaperColour`). Every 255
+frames `BonusBlocks` tries a random empty 6×6 spot and animates a block there; the last frame stays as a new obstacle,
+so the arena slowly fills.
 
 Normal speed moves a cycle one pixel every second frame; boost moves it every frame. Player 2's trail is dotted (plotted
 on alternate steps), so the two trails can be told apart in monochrome.

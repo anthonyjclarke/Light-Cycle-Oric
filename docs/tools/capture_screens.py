@@ -16,10 +16,13 @@ import sys
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 PRG = os.path.join(ROOT, 'c64', 'build', 'lightcycle.prg')
 
-# name: (cycles, what it shows). Boot and autostart take ~2.5 M cycles; the title waits 150 frames.
+# name: (cycles, what it shows). Boot and autostart take ~2.5 M cycles; then the attract cycle runs untouched:
+# the intro picture for 8 s, the instructions for 10 s, then demo mode (fixed random seed, so repeatable).
 CAPTURES = {
-    'phase1-title': (3_500_000, 'Platform test: text mode, PAL/NTSC detection, controls'),
-    'phase1-arena': (16_000_000, 'Platform test: bitmap arena, panels, two cycles moving'),
+    'intro': (4_000_000, 'The intro picture after the cassette inlay'),
+    'instructions': (12_000_000, 'The instructions screen (placeholder until Phase 4)'),
+    'demo-early': (24_000_000, 'Demo mode: the first round, a few seconds in'),
+    'demo-later': (40_000_000, 'Demo mode: trails, bonus blocks, a dotted P2 trail'),
 }
 
 

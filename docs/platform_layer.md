@@ -1,8 +1,8 @@
 # Light Cycle – Platform Layer
 
-The C64 routines the game logic calls instead of touching hardware (Phase 1, `c64/src/`). Where a routine does an
-Oric routine's job it keeps that name and register contract, so ported code calls it unchanged. Everything here is read
-from the source; the plotting, video and timing routines are also exercised by the Phase 1 harness in VICE.
+The C64 routines the game logic calls instead of touching hardware (`c64/src/`). Where a routine does an Oric routine's
+job it keeps that name and register contract, so ported code calls it unchanged. Everything here is read from the
+source; the plotting, video and timing routines are also exercised by the game in VICE.
 
 ---
 
@@ -29,13 +29,14 @@ by the highest raster line (312 lines against 263).
 |:-----------------|:--------------------------|:------------------------------------------------------|
 | `InitVideo`      | –                         | VIC bank 1, ROM font copied to `$4800`, black border  |
 | `BitmapOn`       | `$1E` to `$BFDF`          | Hires bitmap mode                                     |
-| `TextOn`         | `$1A` to `$BFDF`          | Text mode                                             |
+| `TextOn`         | `$1A` to `$BFDF`          | Text mode, black background                           |
 | `ClearBitmap`    | `ClearHires`              | Zeroes `$6000–$7FFF`                                  |
 | `ClearText`      | `ClearTextScreen`         | A = screen code, X = colour                           |
 | `SetArenaColour` | `SetPaperColour`          | A = ink×16 + paper for arena cells                    |
 | `SetPanelColour` | –                         | A = ink×16 + paper for both panels                    |
 | `SetCellColour`  | –                         | A = colour, X = column, Y = row; keeps X, Y           |
 | `BitmapChar`     | HIRES-mode text rows      | A = screen code into cell X, Y; keeps X, Y            |
+| `BitmapCharTall` | Double-height attribute   | As `BitmapChar`, double height into Y and Y + 1       |
 | `PrintText`      | Menu text copies          | `zPtr` = string, X, Y = position, A = colour          |
 
 `CharsetToHires` and `CharsetToText` have no equivalent: on the C64 the text screen (`$4400`), font (`$4800`), bitmap
@@ -68,10 +69,11 @@ table generated at assembly time, against the Oric's divide-by-6 loop.
 | `ReadKeysP2` | `ReadKeysP2`    | Keys `@ RSHIFT : ; L` + joystick 1 → `zInput` and A          |
 | `GetKey`     | –               | New key code or 0; codes as the Oric's (`KEY_*` in `hw.inc`) |
 | `WaitKey`    | `WaitKey`       | Blocks for a new key; code in A                              |
+| `ReadFire`   | –               | C = 1 while fire is held on either joystick                  |
 
 `zInput` keeps the Oric bits: `IN_UP` `$08`, `IN_DOWN` `$04`, `IN_LEFT` `$02`, `IN_RIGHT` `$01`, `IN_BOOST` `$10`. The
-key tables (`KeyTableP1`, `KeyTableP2`) have the Oric layout: column, row mask and input bit per key. `GetKey` scans
-all 64 keys, returns a code only on a new press, and maps SHIFT with the cursor keys to `KEY_UP` and `KEY_LEFT`, as the
+key tables (`KeyTableP1`, `KeyTableP2`) have the Oric layout: column, row mask and input bit per key. `GetKey` scans all
+64 keys, returns a code only on a new press, and maps SHIFT with the cursor keys to `KEY_UP` and `KEY_LEFT`, as the
 Oric's separate cursor keys gave. Pressing keys while moving joystick 2 can show ghost keys; joystick 1 is masked.
 
 ---

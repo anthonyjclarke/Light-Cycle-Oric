@@ -109,3 +109,25 @@ overlap and the Oric's character-set shuffle is not needed.
 
 The game keeps the Oric's 240×200 coordinates. The arena is drawn 40 pixels in from the left of the 320-pixel bitmap,
 leaving a 40-pixel panel each side for the status rows the Oric showed under its bitmap.
+
+```mermaid
+flowchart TD
+    Start --> Intro["IntroScreen: the cassette-art picture, 8 s"]
+    Intro -- "idle" --> Title["TitleScreen: instructions, 10 s"]
+    Title -- "idle" --> Demo["Demo: computer v computer, 4 crashes"]
+    Demo --> Intro
+    Intro -- "1, SPACE, fire / 2" --> Play["PlayGame"]
+    Title -- "1, SPACE, fire / 2" --> Play
+    Play --> RoundStart --> RunTick
+    RunTick -- "Oric frames for one C64 frame" --> RunTick
+    RunTick -- "zCrashed" --> Crash["Crash: ExplosionSfx, Explosion"] --> RoundStart
+    RunTick -- "RUN/STOP" --> Intro
+```
+
+The status panels (`hud.s`) replace the Oric's three text rows: player 1's half of them (name, cycle icon, lives,
+score, and the `TIME` box) is stacked at the foot of the 5 cells left of the arena, player 2's on the right, in the
+Oric's colours and on the round's paper.
+
+`RunTick` waits for the raster tick, then runs `OricFrame` (the body of the Oric's `GameLoop`) as many times as the Oric
+would have in that time ([porting.md](porting.md)). `PlotCheckCrash` sets `zCrashed` and returns out of `MovePlayer`, so
+the crash is handled by the caller with the stack intact.

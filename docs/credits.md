@@ -6,14 +6,16 @@
 
 *Light Cycle* for the Oric-1 and Atmos was written by A.J. Clarke. The game's own credit, on the title screen, reads
 `AUTHOR - A.J.CLARKE`, under the PSS logo and the publisher's address in Coventry; the default hi-score name is
-`P.S.S.`. Release year and other credits are still to be added by the owner.
+`P.S.S.`. It was written in 1983 on an original Oric-1, by hand on paper, and typed in with a machine code monitor
+([original_release.md](original_release.md)). The C64 intro picture is drawn after the PSS cassette inlay for the
+Oric release; the inlay's artist is not yet credited here.
 
 ---
 
 ## The Reconstruction
 
-The disassembly, its annotations and the C64 port are Anthony Clarke's project; the details of who did what are for
-the owner to fill in.
+The disassembly, its annotations and the C64 port are Anthony Clarke's project; the details of who did what are for the
+owner to fill in.
 
 ---
 
@@ -48,3 +50,6 @@ diagrams; both are vendored with their licences in `docs/tools/vendor/`. The han
 
 `CYCLE.TAP` runs in any Oric emulator that loads `.tap` files, such as Oricutron: load it and type `CLOAD""` if it does
 not start by itself.
+
+The game's entry on [Oric.org](https://www.oric.org/software/light_cycle-1432.html), the Oric software archive, lists
+the PSS release (1983, by A. J. Clarke) with in-game screenshots and the cassette cover.

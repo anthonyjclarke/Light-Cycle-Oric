@@ -10,6 +10,7 @@
 
         .export InitVideo, BitmapOn, TextOn, ClearBitmap, ClearText
         .export SetArenaColour, SetPanelColour, SetCellColour, BitmapChar
+        .export BitmapCharTall
         .export PrintText
 
         .segment "CODE"
@@ -53,6 +54,8 @@ BitmapOn:
 
 ; Standard text mode (the Oric's TEXT).
 TextOn:
+        lda     #COL_BLACK              ; the intro picture sets a blue background
+        sta     VIC_BG0
         lda     #MEMSETUP_TEXT
         sta     VIC_MEMSETUP
         lda     #$C8
@@ -158,9 +161,59 @@ SetCellColour:
 ; Used for the side panels, which replace the Oric's three text rows under
 ; HIRES. Preserves X and Y.
 BitmapChar:
+        jsr     GlyphAt
+        ldy     #7
+@copy:  lda     (zPtr),y
+        sta     (zPix),y
+        dey
+        bpl     @copy
+        ldx     zTmp1
+        ldy     zTmp2
+        rts
+
+; Draw glyph A double height into cells (X, Y) and (X, Y + 1), each font
+; row twice, as the Oric's double-height attribute shows its TIME digits.
+; Preserves X and Y.
+BitmapCharTall:
+        jsr     GlyphAt
+        jsr     TallHalf                ; font rows 0-3 into the upper cell
+        lda     zPix
+        clc
+        adc     #<320
+        sta     zPix
+        lda     zPix + 1
+        adc     #>320
+        sta     zPix + 1
+        lda     zPtr                    ; glyphs are 8-byte aligned: no carry
+        ora     #4
+        sta     zPtr
+        jsr     TallHalf                ; rows 4-7 into the lower cell
+        ldx     zTmp1
+        ldy     zTmp2
+        rts
+
+TallHalf:
+        lda     #3
+        sta     zTmp0
+@row:   ldy     zTmp0
+        lda     (zPtr),y
+        pha
+        tya
+        asl     a
+        tay
+        pla
+        sta     (zPix),y
+        iny
+        sta     (zPix),y
+        dec     zTmp0
+        bpl     @row
+        rts
+
+; zPtr = glyph A in CHARSET, zPix = bitmap cell (X, Y); X, Y saved in
+; zTmp1, zTmp2.
+GlyphAt:
         stx     zTmp1
         sty     zTmp2
-        ; source = CHARSET + A * 8
         ldx     #0
         stx     zTmp0
         asl     a
@@ -174,7 +227,6 @@ BitmapChar:
         clc
         adc     #>CHARSET
         sta     zPtr + 1
-        ; destination = BITMAP + Y * 320 + X * 8
         ldx     zTmp1
         ldy     zTmp2
         lda     BitmapRowLo,y
@@ -184,13 +236,6 @@ BitmapChar:
         lda     BitmapRowHi,y
         adc     CellXHi,x
         sta     zPix + 1
-        ldy     #7
-@copy:  lda     (zPtr),y
-        sta     (zPix),y
-        dey
-        bpl     @copy
-        ldx     zTmp1
-        ldy     zTmp2
         rts
 
 ; Print a STR_END-terminated screen-code string to the text screen

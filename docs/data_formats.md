@@ -70,7 +70,9 @@ leading space as `0`.
 | P2 lives  | 2   | 27      | `$BFD3`        |
 | P2 score  | 2   | 30–37   | `$BFD6–$BFDD`  |
 
-`TIME` is written to both rows 1 and 2 under a double-height attribute.
+`TIME` is written to both rows 1 and 2 under a double-height attribute. The C64 keeps these fields in RAM in the same
+form (`ScoreP1`, `ScoreP2`, `TimeDigits`: 8 ASCII characters, right-aligned, spaces before the first digit; `LivesP1`,
+`LivesP2`: one ASCII digit) and draws them into its side panels.
 
 ---
 

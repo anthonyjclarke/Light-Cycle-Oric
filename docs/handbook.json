@@ -25,6 +25,7 @@
             "sources": [
                 "docs/README.md",
                 "docs/player_guide.md",
+                "docs/original_release.md",
                 "docs/graphics.md",
                 "docs/sound.md",
                 "docs/architecture.md",
@@ -39,6 +40,7 @@
                 "docs/porting.md",
                 "docs/platform_layer.md",
                 "docs/quirks.md",
+                "docs/oric.md",
                 "CHANGELOG.md",
                 "docs/html_documentation.md",
                 "docs/credits.md"

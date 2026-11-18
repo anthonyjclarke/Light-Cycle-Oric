@@ -2,14 +2,14 @@
 ;
 ; The Oric paces the game with busy-wait loops (FrameDelay, Delay), so its
 ; speed varies with how much it draws. The C64 version counts raster ticks
-; instead: one zTick per frame (50 Hz PAL, 60 Hz NTSC). Speed tables that
-; turn ticks into pixels per step belong to the game logic (Phase 2) and
-; are calibrated against the Oric there.
+; instead: one zTick per frame (50 Hz PAL, 60 Hz NTSC). The game turns
+; ticks into Oric frames with a time budget measured from the Oric code
+; (RunTick in game.s).
 
         .include "hw.inc"
         .include "zp.inc"
 
-        .export InitTiming, WaitTick, WaitTicks
+        .export InitTiming, WaitTick, WaitTicks, Delay
 
 IRQ_LINE = 251                          ; bottom border, below the 200 visible lines
 
@@ -65,6 +65,11 @@ WaitTick:
 @wait:  cmp     zTick
         beq     @wait
         rts
+
+; Oric Delay ($0764): about 0.15 s. Preserves Y.
+Delay:
+        ldx     #8
+        ; fall through
 
 ; Wait X frame ticks (X = 0 waits 256). Preserves Y.
 WaitTicks:

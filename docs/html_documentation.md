@@ -33,7 +33,8 @@ Run from the repository root, in this order. The figure tool needs Pillow: on th
 | Split the tape, disassemble   | `make oric`                              | cc65           | `oric/*.bin`, `oric/*.s`        |
 | Build the C64 port            | `make`                                   | cc65           | `c64/build/lightcycle.prg`      |
 | Capture the screens           | `python3 docs/tools/capture_screens.py`  | VICE (`x64sc`) | `docs/images/screens/`          |
-| Decode the Oric figures       | `python3 docs/tools/render_graphics.py`  | Pillow         | `docs/images/graphics/`         |
+| Decode the Oric figures       | `python3 docs/tools/render_graphics.py`  | Pillow, VICE   | `docs/images/graphics/`         |
+| Draw the appendix figures     | `python3 docs/tools/render_oric.py`      | Pillow         | `docs/images/graphics/oric-*`   |
 | Generate the HTML             | `node docs/tools/build_docs.mjs`         | Node.js 20+    | `docs/LIGHT_CYCLE.html`         |
 | Check the HTML is current     | `node docs/tools/build_docs.mjs --check` | Node.js 20+    | –                               |
 
@@ -54,10 +55,15 @@ regenerates it whenever a source changes. `just docs-graphics` and `just docs-sc
 
 - **Screenshots.** `capture_screens.py` boots the build in a fresh headless `x64sc` (default settings, warp, no sound)
   for each capture and saves the screen after a fixed number of CPU cycles, with VICE's random autostart delay turned
-  off. The Phase 1 harness takes no input and uses no random numbers, so the captures repeat exactly.
+  off. The attract cycle takes no input and demo mode starts from a fixed random seed, so the captures repeat exactly.
 - **Oric figures.** `render_graphics.py` reads the tape blocks extracted by `make oric` and finds every table by its
   label in `tools/symbols.py`. It draws glyphs 6 pixels wide, as the Oric does, and decodes the title logo's serial
-  attributes for its colours. The figures are deterministic.
+  attributes for its colours. The Oric screen replica runs the game's own round set-up and first frames on
+  `tools/cpu6502.py` and renders the memory with the Oric's attributes, borrowing VICE's C64 font for letters (the
+  Oric ROM font is not on the tape); the status comparison crops the C64 side from the demo capture, so run it after
+  the screen captures. The figures are deterministic.
+- **Oric appendix figures.** `render_oric.py` draws the palette, a HIRES line of serial attributes and the AY's
+  envelope shapes for `oric.md`. It reads nothing from the game, so the file is the same in every Oric reconstruction.
 
 ---
 

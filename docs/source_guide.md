@@ -10,7 +10,7 @@
 | `oric/game.s`          | Annotated disassembly of the `GAME` block (generated, committed)    |
 | `oric/loader.s`        | Annotated disassembly of the `LIGHT CYCLE` block                    |
 | `oric/light_cycle.bas` | The BASIC stub as text                                              |
-| `tools/`               | Tape splitter, code tracer, disassembly builder and its symbols     |
+| `tools/`               | Tape, disassembly, timing, table export and intro-picture tools     |
 | `c64/src/`             | The C64 port (ca65)                                                 |
 | `c64/cfg/c64.cfg`      | ld65 memory layout                                                  |
 | `c64/build/`           | Build output, screenshots: never committed                          |
@@ -43,21 +43,28 @@ The `Makefile` builds the port; the `justfile` wraps it and adds the documentati
 | `make run`   | Starts the build in VICE with the labels loaded into its monitor            |
 | `make smoke` | Headless boot; screenshots into `c64/build/` (`capture_screens.py`)          |
 | `make oric`  | Splits the tape, regenerates `oric/*.s`, checks they rebuild byte for byte  |
+| `make intro` | Redraws `c64/src/intro.rle` and its preview (`tools/make_intro.py`)          |
+| `make tables` | Re-exports `c64/src/oric_tables.inc` (`tools/export_tables.py`)            |
 | `make clean` | Removes `c64/build/`                                                        |
 
-`make oric` must report both blocks as `IDENTICAL`. It runs `tools/tap_extract.py`, then `tools/build_disasm.py`,
-which writes a da65 info file from `tools/symbols.py`, disassembles, adds the comments and reassembles with `cl65`.
-To rename an Oric label or add a comment, edit `tools/symbols.py` and run `make oric`; never edit `oric/*.s` by hand.
+`make oric` must report both blocks as `IDENTICAL`. It runs `tools/tap_extract.py`, then `tools/build_disasm.py`, which
+writes a da65 info file from `tools/symbols.py`, disassembles, adds the comments and reassembles with `cl65`. To rename
+an Oric label or add a comment, edit `tools/symbols.py` and run `make oric`; never edit `oric/*.s` by hand.
 
 ---
 
 ## C64 Source Conventions
 
-- One module per concern (`video.s`, `plot.s`, `input.s`, `sound.s`, `timing.s`, `platform.s`), each starting with a
-  comment naming the Oric routines it replaces. Where a routine takes over an Oric routine's job, it keeps its name and
-  its register contract.
-- Hardware addresses, memory layout and constants live in `hw.inc`; zero page is declared in `zp.s` and imported
-  through `zp.inc`. No raw hardware addresses in code.
+- One module per concern, each starting with a comment naming the Oric routines it replaces or ports. Platform:
+  `platform.s`, `video.s`, `plot.s`, `timing.s`, `input.s`, `sound.s`. Game: `game.s` (rounds, timing budget),
+  `player.s`, `ai.s`, `arena.s`, `explosion.s`, `bonus.s`, `score.s`, `hud.s`. Front end: `main.s` (attract cycle,
+  demo), `intro.s`. Where a routine takes over an Oric routine's job, it keeps its name and its register contract.
+- Ported game code follows the Oric line for line, including where it relies on the carry flag; changes are listed in
+  [porting.md](porting.md) and marked in the comments.
+- Generated sources are committed and never edited: `oric_tables.inc` (`tools/export_tables.py`) and `intro.rle`
+  (`tools/make_intro.py`).
+- Hardware addresses, memory layout and constants live in `hw.inc`; zero page is declared in `zp.s` and imported through
+  `zp.inc`. No raw hardware addresses in code.
 - Lookup tables are generated at assembly time with `.repeat`, so the arithmetic that defines them is in the source.
 - `basic_stub.s` links first so `Start` lands at `$080D`; an `.assert` fails the link otherwise.
 - Strings for the text screen use `screencodes.inc` and end with `STR_END` (`$FF`), because `@` is screen code 0.

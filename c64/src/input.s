@@ -17,7 +17,7 @@
         .include "hw.inc"
         .include "zp.inc"
 
-        .export InitInput, ReadKeysP1, ReadKeysP2, GetKey, WaitKey
+        .export InitInput, ReadKeysP1, ReadKeysP2, GetKey, WaitKey, ReadFire
 
         .segment "CODE"
 
@@ -163,6 +163,19 @@ GetKey:
 WaitKey:
         jsr     GetKey
         beq     WaitKey
+        rts
+
+; C = 1 if fire is held on either joystick. Preserves X, Y.
+ReadFire:
+        lda     #$FF
+        sta     CIA1_PRA
+        lda     CIA1_PRA                ; joystick 2
+        and     CIA1_PRB                ; joystick 1
+        and     #$10                    ; 0 = pressed
+        bne     :+
+        sec
+        rts
+:       clc
         rts
 
         .segment "RODATA"
