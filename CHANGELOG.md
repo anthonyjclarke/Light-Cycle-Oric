@@ -6,6 +6,13 @@
 
 ### Added
 
+- A root `README.md` for the GitHub repository, in the same form as *Hopper*'s. It presents the project as a C64 version
+  of the game, with the Oric original and its source kept alongside and buildable for Oric emulators: the game, the C64
+  keys, C64 and Oric screenshots, the versions and the port's progress, the history, and how to build and run both.
+- `make tap`, `make verify` and `make oric-run` (with `just verify` and `just oric-run`): `tools/build_tap.py` assembles
+  `oric/loader.s` and `oric/game.s` and wraps them in the original tape headers as `build/CYCLE.TAP`, which
+  `make verify` checks byte for byte against `CYCLE.TAP` (it matches) and `make oric-run` loads in Auric. `build/` is
+  gitignored.
 - `docs/original_release.md`: how the game was written (1983, by hand on paper, entered with a machine code monitor),
   the PSS cassette instruction sheet, the PSS advert, two magazine reviews and a New Releases column cut to their
   *Light Cycle* parts, and the review's screen photographs matched against `DrawStatusLine`.
@@ -22,6 +29,12 @@
 
 ### Changed
 
+- Links to the *Hopper* repository (github.com/anthonyjclarke/Hopper-Oric) where the game is named: the README's history
+  and `original_release.md`'s advert.
+- A documentation pass across every chapter: everything is written in the third person; the docs index and README lead
+  with the C64 version and point to the Oric original and its build; `source_guide.md`, `data_formats.md` and
+  `credits.md` cover the tape rebuild; the player's guide no longer says the original is untested in an emulator;
+  `porting.md` drops the superseded speed-table plan and the finished Phase 2 and 3 plans, keeping Phases 4–6.
 - The Oric appendix moves out of Reference into its own Appendix group in the handbook and index, and splits in two.
   `oric_history.md` ("History of Oric") is expanded into the full story: Tangerine and the Microtan, the Oric-1 and its
   French success, the 1983 factory fire, Edenspring and the Atmos, the peripherals, the Stratos and the receivers,

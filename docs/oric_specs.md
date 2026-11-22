@@ -235,9 +235,9 @@ Auric looks for three files in its `ROMS/` folder, under these names; the SHA1 s
 | `basic11b.rom` | `Basic1.1.zip`   | Atmos, BASIC 1.1  | `9451a1a09d8f75944dbd6f91193fc360f1de80ac` |
 | `microdis.rom` | `Oricdisc.zip`   | Microdisc drive   | `0d2ef6e67322f48f4b7e08d8bbe68827e2074561` |
 
-Unzip each archive, rename the ROM to the name in the first column, and check it with `shasum`. Auric refuses to
-start unless all three are present, even with no disk in use: the Microdisc ROM is only switched in when a disk image
-is given, but the file is loaded at start-up.
+Each archive unzips to one ROM, which is renamed to the name in the first column and can be checked with `shasum`. Auric
+refuses to start unless all three are present, even with no disk in use: the Microdisc ROM is only switched in when a
+disk image is given, but the file is loaded at start-up.
 
 ### Building and Running Auric
 
@@ -249,16 +249,16 @@ git clone https://github.com/pugo/Auric.git
 cd Auric && mkdir build && cd build && cmake .. && make -j10
 ```
 
-Run it from the `Auric` folder, since it reads `auric.yaml` and `ROMS/` from the current directory. The binary may be
-`build/auric` or `build/src/auric`, depending on the build. `--oric1` selects the Oric-1 ROM (the default is the Atmos),
-which early tapes written for the Oric-1 may need, and `--tape` loads and starts a tape:
+Auric runs from the `Auric` folder, since it reads `auric.yaml` and `ROMS/` from the current directory. The binary may
+be `build/auric` or `build/src/auric`, depending on the build. `--oric1` selects the Oric-1 ROM (the default is the
+Atmos), which early tapes written for the Oric-1 may need, and `--tape` loads and starts a tape:
 
 ```bash
 cd Auric && ./build/src/auric --oric1 --tape /path/to/game.tap
 ```
 
 F1 opens Auric's menu (settings, tape and disk images, rewind), Shift-Ctrl-W toggles warp speed and Shift-Ctrl-R
-resets. On a real Oric, or with autostart turned off, type `CLOAD""` and press Return to load the tape.
+resets. On a real Oric, or with autostart turned off, `CLOAD""` and Return load the tape.
 
 ---
 

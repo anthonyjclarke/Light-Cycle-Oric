@@ -28,13 +28,14 @@ Spring*). The handbook generator and templates are carried over from those repos
 
 ## Tools
 
-| Tool                                     | Use                                          |
-|:-----------------------------------------|:---------------------------------------------|
-| [cc65](https://cc65.github.io/)          | `ca65`, `ld65`, `da65`, `cl65`               |
-| [VICE](https://vice-emu.sourceforge.io/) | `x64sc` emulation and captures, `c1541`      |
-| [Python](https://www.python.org/)        | Tape, disassembly and figure tools           |
-| [Pillow](https://python-pillow.org/)     | Figure rendering                             |
-| [Node.js](https://nodejs.org/)           | Handbook generation                          |
+| Tool                                     | Use                                       |
+|:-----------------------------------------|:------------------------------------------|
+| [cc65](https://cc65.github.io/)          | `ca65`, `ld65`, `da65`, `cl65`            |
+| [VICE](https://vice-emu.sourceforge.io/) | `x64sc` emulation and captures, `c1541`   |
+| [Auric](https://github.com/pugo/Auric)   | Running the Oric original and the rebuild |
+| [Python](https://www.python.org/)        | Tape, disassembly and figure tools        |
+| [Pillow](https://python-pillow.org/)     | Figure rendering                          |
+| [Node.js](https://nodejs.org/)           | Handbook generation                       |
 
 ---
 
@@ -48,8 +49,9 @@ diagrams; both are vendored with their licences in `docs/tools/vendor/`. The han
 
 ## Playing the Original
 
-`CYCLE.TAP` runs in any Oric emulator that loads `.tap` files, such as Oricutron: load it and type `CLOAD""` if it does
-not start by itself.
+`CYCLE.TAP` runs in any Oric emulator that loads `.tap` files, such as Auric or Oricutron; where it does not start by
+itself, `CLOAD""` loads it. `make verify` builds the same tape from the source in `oric/`, as `build/CYCLE.TAP`, and
+`make oric-run` starts it in Auric ([oric_specs.md](oric_specs.md) covers the ROMs and set-up).
 
 The game's entry on [Oric.org](https://www.oric.org/software/light_cycle-1432.html), the Oric software archive, lists
 the PSS release (1983, by A. J. Clarke) with in-game screenshots and the cassette cover.

@@ -1,4 +1,4 @@
-# Light Cycle — recipes. The C64 build itself is the Makefile (make, make d64, make run, make smoke, make oric).
+# Light Cycle — recipes. The C64 build itself is the Makefile (make, make d64, make run, make smoke, make oric, make verify, make oric-run).
 
 default:
     @just --list
@@ -14,6 +14,14 @@ run:
 # Regenerate and verify the Oric disassembly from CYCLE.TAP.
 oric:
     make oric
+
+# Assemble the Oric source into build/CYCLE.TAP and check it against the original.
+verify:
+    make verify
+
+# Run the Oric build in Auric (AURIC_DIR, default ~/PlatformIO/Projects/Auric).
+oric-run:
+    make oric-run
 
 # --- Documentation (docs/html_documentation.md). The figure tool needs Pillow: DOCS_PYTHON, else python3.14 (Homebrew), else python3.
 docs_py := `echo "${DOCS_PYTHON:-$(command -v python3.14 || echo python3)}"`

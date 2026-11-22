@@ -1,10 +1,10 @@
 # Light Cycle – Documentation
 
-*Light Cycle* is a two-player light-cycle game for the Oric-1 and Atmos (16K or 48K), written by A.J. Clarke and
-published on tape by PSS. It was written in 1983 on an original Oric-1, by hand on paper, and entered into the
-machine with a machine code monitor ([original_release.md](original_release.md)). This repository holds a
-byte-identical, commented disassembly of the original tape, and a Commodore 64 port built from it: the Oric game logic
-re-hosted on a new C64 platform layer.
+A Commodore 64 version of *Light Cycle*, the two-player light-cycle game for the Oric-1 and Atmos (16K or 48K) written
+by A.J. Clarke and published on tape by PSS in 1983. The game was written on an original Oric-1, by hand on paper, and
+entered with a machine code monitor ([original_release.md](original_release.md)). The C64 version runs the Oric game
+logic on a new C64 platform layer. The Oric original is kept alongside it: the tape, `CYCLE.TAP`, and its full commented
+source in `oric/`, which `make verify` assembles back into a byte-identical tape for any Oric emulator.
 
 **[LIGHT_CYCLE.html](LIGHT_CYCLE.html)** gathers every document below, with the images embedded, into one page that
 reads offline in a browser.

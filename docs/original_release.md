@@ -31,9 +31,9 @@ The keys on the sheet are the ones the disassembly reads, and the C64 port keeps
 ## The PSS Advert
 
 A full-page PSS advert, "Real Software for your Oric 1", with the *Light Cycle* inlay in the top-left corner. Light
-Cycle is listed under "Available soon" at £6.95, beside Centipede, Invaders, Hopper, Oric-Mon and The Ultra. Its blurb
-sells the *Tron* setting (the M.C.P. and the grid), one or two players against each other or the computer, and 100%
-machine code.
+Cycle is listed under "Available soon" at £6.95, beside Centipede, Invaders,
+[Hopper](https://github.com/anthonyjclarke/Hopper-Oric), Oric-Mon and The Ultra. Its blurb sells the *Tron* setting (the
+M.C.P. and the grid), one or two players against each other or the computer, and 100% machine code.
 
 ![The PSS advert for its Oric 1 range, with the Light Cycle inlay](images/original/pss-advert.jpg)
 

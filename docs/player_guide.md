@@ -1,7 +1,8 @@
 # Light Cycle – Player's Guide
 
-Everything here is read from the Oric code (`oric/game.s`); it has not yet been checked by playing the original in an
-emulator. The C64 version will follow these rules (see [porting.md](porting.md)).
+The rules are read from the Oric code (`oric/game.s`). The original has been run in Auric, but the rules have not been
+checked against it one by one. The C64 version follows the same rules, apart from the differences listed in
+[porting.md](porting.md).
 
 ---
 
@@ -68,4 +69,4 @@ screen (`PlayAgain`).
 
 `ComputerAI` looks 3 pixels ahead, 3 pixels wide. When the way is blocked it turns toward player 1 on the other axis;
 `AIAvoid` reverses that turn if it is blocked too. `AIBoost` boosts whenever the computer is 30 or more pixels from
-player 1 on either axis, so it closes distance fast and slows down near you.
+player 1 on either axis, so it closes distance fast and slows down near player 1.

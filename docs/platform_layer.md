@@ -80,7 +80,7 @@ Oric's separate cursor keys gave. Pressing keys while moving joystick 2 can show
 
 ## Sound
 
-See [sound.md](sound.md) for how each Oric effect maps to the SID.
+[sound.md](sound.md) shows how each Oric effect maps to the SID.
 
 | Routine        | Replaces (Oric)        | Contract                                          |
 |:---------------|:-----------------------|:--------------------------------------------------|

@@ -16,17 +16,17 @@ support.
 The sidebar's **Switch to the C64 font** button sets the page in Style's [C64
 TrueType](https://style64.org/c64-truetype) fonts. Their [licence](https://style64.org/c64-truetype/license) allows
 embedding them unmodified with `@font-face` but not offering the files for download, so `docs/tools/fonts/` ignores
-everything but its own `.gitignore`. To include the option, copy `C64_Pro-STYLE.woff2` and `C64_Pro_Mono-STYLE.woff2`
-from the package's `fonts/` folder, unmodified, into `docs/tools/fonts/`. Without them the button is left out and `just
-docs-check` reports the handbook stale, because the committed handbook is generated with them. The paths and labels are
-`retroFont` in `docs/handbook.json`.
+everything but its own `.gitignore`. The option is included once `C64_Pro-STYLE.woff2` and `C64_Pro_Mono-STYLE.woff2`
+are copied from the package's `fonts/` folder, unmodified, into `docs/tools/fonts/`. Without them the button is left out
+and `just docs-check` reports the handbook stale, because the committed handbook is generated with them. The paths and
+labels are `retroFont` in `docs/handbook.json`.
 
 ---
 
 ## Regeneration
 
-Run from the repository root, in this order. The figure tool needs Pillow: on this Mac use Homebrew's
-`/opt/homebrew/bin/python3.14`.
+The steps run from the repository root, in this order. The figure tool needs Pillow, which on the development Mac is
+Homebrew's `/opt/homebrew/bin/python3.14`.
 
 | Step                          | Command                                  | Needs          | Writes                          |
 |:------------------------------|:-----------------------------------------|:---------------|:--------------------------------|
@@ -59,13 +59,13 @@ regenerates it whenever a source changes. `just docs-graphics` and `just docs-sc
 - **Oric figures.** `render_graphics.py` reads the tape blocks extracted by `make oric` and finds every table by its
   label in `tools/symbols.py`. It draws glyphs 6 pixels wide, as the Oric does, and decodes the title logo's serial
   attributes for its colours. The Oric screen replica runs the game's own round set-up and first frames on
-  `tools/cpu6502.py` and renders the memory with the Oric's attributes, borrowing VICE's C64 font for letters (the
-  Oric ROM font is not on the tape); the status comparison crops the C64 side from the demo capture, so run it after
-  the screen captures. The figures are deterministic.
-- **Oric appendix figures.** `render_oric.py` draws the palette, a HIRES line of serial attributes and the AY's
-  envelope shapes for `oric_specs.md`. It reads nothing from the game, so the file is the same in every Oric reconstruction.
-- **Oric appendix screenshot.** `oric-basic-hires.png` is a capture of `oric_specs.md`'s HIRES BASIC example running in the
-  Auric emulator on the Atmos ROM; it is not generated, so re-render it by hand if the example changes.
+  `tools/cpu6502.py` and renders the memory with the Oric's attributes, borrowing VICE's C64 font for letters (the Oric
+  ROM font is not on the tape); the status comparison crops the C64 side from the demo capture, so it runs after the
+  screen captures. The figures are deterministic.
+- **Oric appendix figures.** `render_oric.py` draws the palette, a HIRES line of serial attributes and the AY's envelope
+  shapes for `oric_specs.md`. It reads nothing from the game, so the file is the same in every Oric reconstruction.
+- **Oric appendix screenshot.** `oric-basic-hires.png` is a capture of `oric_specs.md`'s HIRES BASIC example running in
+  the Auric emulator on the Atmos ROM; it is not generated, so it is re-captured by hand if the example changes.
 
 ---
 

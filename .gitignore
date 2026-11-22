@@ -1,5 +1,6 @@
 # Build output
 c64/build/
+build/
 *.o
 *.prg
 *.d64

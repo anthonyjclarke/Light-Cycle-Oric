@@ -5,6 +5,9 @@
 #   make run      launch in VICE
 #   make smoke    headless boot in VICE, screenshots to c64/build/
 #   make oric     regenerate + verify the Oric disassembly from CYCLE.TAP
+#   make tap      assemble the Oric source into build/CYCLE.TAP
+#   make verify   build/CYCLE.TAP, checked byte for byte against the original CYCLE.TAP
+#   make oric-run build/CYCLE.TAP in the Auric emulator, Oric-1 mode (AURIC_DIR)
 #   make intro    redraw the intro picture (c64/src/intro.rle)
 #   make tables   re-export the Oric data tables (c64/src/oric_tables.inc)
 
@@ -28,7 +31,7 @@ D64     := $(BUILD)/lightcycle.d64
 MAP     := $(BUILD)/lightcycle.map
 LABELS  := $(BUILD)/lightcycle.lbl
 
-.PHONY: all prg d64 run smoke oric intro tables clean
+.PHONY: all prg d64 run smoke oric tap verify oric-run intro tables clean
 
 all: prg
 prg: $(PRG)
@@ -59,6 +62,21 @@ oric:
 	python3 tools/tap_extract.py CYCLE.TAP oric
 	python3 tools/build_disasm.py
 
+# The Oric original, assembled from oric/loader.s and oric/game.s
+TAP       := build/CYCLE.TAP
+AURIC_DIR ?= $(HOME)/PlatformIO/Projects/Auric
+
+tap: $(TAP)
+$(TAP): oric/loader.s oric/game.s tools/build_tap.py
+	python3 tools/build_tap.py $@
+
+verify: $(TAP)
+	@cmp $(TAP) CYCLE.TAP && echo "OK: $(TAP) is byte-identical to CYCLE.TAP"
+
+# Auric reads auric.yaml and ROMS/ from its working directory
+oric-run: $(TAP)
+	cd "$(AURIC_DIR)" && ./build/src/auric --oric1 --tape "$(abspath $(TAP))"
+
 DOCS_PY ?= $(shell command -v python3.14 || echo python3)
 
 intro:
@@ -68,4 +86,4 @@ tables:
 	python3 tools/export_tables.py
 
 clean:
-	rm -rf $(BUILD)
+	rm -rf $(BUILD) build

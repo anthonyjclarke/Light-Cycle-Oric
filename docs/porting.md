@@ -133,9 +133,9 @@ bitmap leaves no rows below it without a raster split.
 halve the horizontal resolution, making sideways movement twice as fast as vertical.
 
 **Timing.** The Oric's speed came from a busy-wait plus a varying amount of drawing, so it was never constant. The C64
-counts raster frames (50 Hz PAL, 60 Hz NTSC). In Phase 2 each player gets a fixed-point step accumulator; the speed
-setting and boost choose the pixels per tick, and every pixel step still runs the full crash test. The table needs
-measurements of the Oric original in an emulator (Oricutron) at speeds 1, 5 and 9, normal and boosted.
+counts raster frames (50 Hz PAL, 60 Hz NTSC). Rather than a speed table tuned by eye, `tools/oric_timing.py` measures
+the Oric's own frame costs on a cycle-counting 6502 core, and `RunTick` runs Oric frames against that time budget
+(Phase 2, above). Every pixel step still runs the full crash test.
 
 **Controls.** The Oric key layout, mapped by position ([player_guide.md](player_guide.md)), plus joystick port 2 for
 player 1 and port 1 for player 2. Joystick 1 shares lines with the keyboard rows; `ScanPlayerKeys` masks the rows it
@@ -146,25 +146,19 @@ it, replaces it with a credit line or drops it is the owner's call; open.
 
 ---
 
-## Phases 2–6
+## Phases 4–6
 
-**Phase 2, game logic.** Port in dependency order, checking each against `game.s`: `Random`, `DrawLine`, `DrawBorder`
-and `DrawObstacles`, `RandomStarts`, `EraseHead`, `MovePlayer` and `PlotCheckCrash`, `ComputerAI`, `AIAvoid` and
-`AIBoost`, `Explosion`, `BonusBlocks`. `BonusBlocks` writes whole 6-pixel Oric bytes, so it becomes a 6×6 pixel blit
-through `PlotXY` and `UnplotPixel`, with a 36-pixel `PixelSet` emptiness test. The crash exit becomes a flag returned to
-`GameLoop` ([quirks.md](quirks.md)). Exit test: a full round against the computer, with crashes and explosions.
+Phases 2 and 3 are done and described under Status above. What remains:
 
-**Phase 3, panels and scoring.** Keep scores and `TIME` as 8-character ASCII buffers, reusing `AddDigit` unchanged, and
-draw them into the panels with `BitmapChar`. The winner's flash becomes a colour flash. Exit test: a full 5-life match.
-
-**Phase 4, menus.** A converter in `tools/` turns the Oric screens and strings (serial attributes, 6-pixel glyphs) into
-screen codes, colour RAM and 8×8 glyphs; the 28-row title must fit 25 rows. Then `VolumeScreen`, `AskPlayers`,
+**Phase 4, menus.** A converter in `tools/` is to turn the Oric screens and strings (serial attributes, 6-pixel glyphs)
+into screen codes, colour RAM and 8×8 glyphs; the 28-row title has to fit 25 rows. Then `VolumeScreen`, `AskPlayers`,
 `AskSpeed`, `HiscoreEntry`, `PrintHiscores`, `PlayAgain`, `FlashTitle`. Exit test: title to game to hi-score and back.
 
 **Phase 5, polish (optional).** Hardware sprites for the cycle heads, SID pulse-width movement on the engines, NTSC
 speed table, hi-scores saved to disk, exomizer packing.
 
-**Phase 6, release.** `.prg` and `.d64`, a README with the controls, tag `v1.0`.
+**Phase 6, release.** `.prg` and `.d64` attached to a GitHub release, the README's controls brought up to date, tag
+`v1.0`.
 
 ---
 

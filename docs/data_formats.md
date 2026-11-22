@@ -7,7 +7,8 @@ The tape format and the Oric game's tables, read from the code. Labels are the d
 ## Tape Blocks
 
 Each Oric tape block is a run of `$16` sync bytes, `$24`, a 9-byte header, a 0-terminated name, then the data. The end
-address is inclusive. `tools/tap_extract.py` splits `CYCLE.TAP` this way.
+address is inclusive. `tools/tap_extract.py` splits `CYCLE.TAP` this way, and `tools/build_tap.py` writes the
+assembled source back out the same way (`make verify`).
 
 | Header byte | Meaning                                    | `LIGHT CYCLE` | `GAME`  |
 |:------------|:-------------------------------------------|:--------------|:--------|
