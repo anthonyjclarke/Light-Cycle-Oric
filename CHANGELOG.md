@@ -29,6 +29,9 @@
 
 ### Changed
 
+- `credits.md`: a Restoration Toolkit section on Anthony's private *Old Code Restoration* toolkit, how it grew from
+  *Dork's Dilemma* to the Oric games, and its credits: retro-archaeology-skills, MOSaic, OpenCBM, ZoomFloppy, cc65,
+  VICE, Auric and Marked.
 - Links to the *Hopper* repository (github.com/anthonyjclarke/Hopper-Oric) where the game is named: the README's history
   and `original_release.md`'s advert.
 - A documentation pass across every chapter: everything is written in the third person; the docs index and README lead
