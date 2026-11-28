@@ -52,9 +52,9 @@ The `Makefile` builds the C64 version and the Oric tape; the `justfile` wraps it
 | `make clean`    | Removes `c64/build/` and `build/`                                               |
 
 `make oric` must report both blocks as `IDENTICAL`. It runs `tools/tap_extract.py`, then `tools/build_disasm.py`, which
-writes a da65 info file from `tools/symbols.py`, disassembles, adds the comments and reassembles with `cl65`. Labels and
-comments are changed in `tools/symbols.py` followed by `make oric`; `oric/*.s` is never edited by hand. `make verify`
-then wraps the two assembled blocks in the original tape headers and confirms the tape matches.
+writes a da65 info file from `tools/symbols.py`, disassembles, adds the comments and reassembles with `cl65`. To change
+a label or comment, edit `tools/symbols.py` and run `make oric`; never edit `oric/*.s` by hand. `make verify` then
+wraps the two assembled blocks in the original tape headers and confirms the tape matches.
 
 ---
 

@@ -4,7 +4,7 @@
 
 The [HTML handbook](LIGHT_CYCLE.html) gathers the chapters in `docs/`, the changelog, the decoded figures and the VICE
 screenshots into one offline page. Images, styling, the reader's controls and the Mermaid renderer are all embedded, so
-it opens in a browser with no network access.
+it opens in a browser with no network connection.
 
 **Edit the Markdown, never the generated HTML.** Each chapter links to its Markdown source, and links between included
 documents become links within the page. Links to other repository files stay relative, so they work only when the
@@ -25,8 +25,8 @@ labels are `retroFont` in `docs/handbook.json`.
 
 ## Regeneration
 
-The steps run from the repository root, in this order. The figure tool needs Pillow, which on the development Mac is
-Homebrew's `/opt/homebrew/bin/python3.14`.
+Run the steps from the repository root, in this order. The figure tool needs Pillow, which on my Mac is Homebrew's
+`/opt/homebrew/bin/python3.14`.
 
 | Step                          | Command                                  | Needs          | Writes                          |
 |:------------------------------|:-----------------------------------------|:---------------|:--------------------------------|
@@ -65,7 +65,7 @@ regenerates it whenever a source changes. `just docs-graphics` and `just docs-sc
 - **Oric appendix figures.** `render_oric.py` draws the palette, a HIRES line of serial attributes and the AY's envelope
   shapes for `oric_specs.md`. It reads nothing from the game, so the file is the same in every Oric reconstruction.
 - **Oric appendix screenshot.** `oric-basic-hires.png` is a capture of `oric_specs.md`'s HIRES BASIC example running in
-  the Auric emulator on the Atmos ROM; it is not generated, so it is re-captured by hand if the example changes.
+  the Auric emulator on the Atmos ROM. It isn't generated, so if the example changes it has to be re-captured by hand.
 
 ---
 

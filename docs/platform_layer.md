@@ -1,8 +1,8 @@
 # Light Cycle – Platform Layer
 
-The C64 routines the game logic calls instead of touching hardware (`c64/src/`). Where a routine does an Oric routine's
-job it keeps that name and register contract, so ported code calls it unchanged. Everything here is read from the
-source; the plotting, video and timing routines are also exercised by the game in VICE.
+These are the C64 routines the game logic calls instead of touching the hardware (`c64/src/`). Where a routine does an
+Oric routine's job it keeps that name and register contract, so ported code calls it unchanged. Everything here is read
+from the source, and the plotting, video and timing routines also get exercised by the game in VICE.
 
 ---
 

@@ -1,13 +1,15 @@
 # Light Cycle – Documentation
 
-A Commodore 64 version of *Light Cycle*, the two-player light-cycle game for the Oric-1 and Atmos (16K or 48K) written
-by A.J. Clarke and published on tape by PSS in 1983. The game was written on an original Oric-1, by hand on paper, and
-entered with a machine code monitor ([original_release.md](original_release.md)). The C64 version runs the Oric game
-logic on a new C64 platform layer. The Oric original is kept alongside it: the tape, `CYCLE.TAP`, and its full commented
-source in `oric/`, which `make verify` assembles back into a byte-identical tape for any Oric emulator.
+These are the docs for my Commodore 64 version of *Light Cycle*, the two-player light-cycle game I wrote for the
+Oric-1 and Atmos (16K or 48K) and PSS published on tape in 1983. I wrote the original on an Oric-1, by hand on paper,
+and entered it with Oric-Mon, my machine code monitor ([original_release.md](original_release.md#oric-mon)). The C64 version runs the Oric
+game logic on a new C64 platform layer.
 
-**[LIGHT_CYCLE.html](LIGHT_CYCLE.html)** gathers every document below, with the images embedded, into one page that
-reads offline in a browser.
+The Oric original sits alongside it: the tape, `CYCLE.TAP`, and its full commented source in `oric/`, which
+`make verify` assembles back into a byte-identical tape for any Oric emulator.
+
+**[LIGHT_CYCLE.html](LIGHT_CYCLE.html)** gathers every document below into one page, images embedded, that reads
+offline in a browser.
 
 ---
 
@@ -27,14 +29,14 @@ reads offline in a browser.
 
 ## Reference
 
-| Document                                       | Covers                                                      |
-|:-----------------------------------------------|:------------------------------------------------------------|
-| [porting.md](porting.md)                       | The C64 port plan: decisions, memory map, phases, risks     |
-| [platform_layer.md](platform_layer.md)         | The C64 platform interface, routine by routine              |
-| [quirks.md](quirks.md)                         | Places where the original does something unintended         |
-| [CHANGELOG.md](../CHANGELOG.md)                | Release history                                             |
-| [html_documentation.md](html_documentation.md) | Regenerating the figures, screenshots and the handbook      |
-| [credits.md](credits.md)                       | Who made the game and this repository; tools and links      |
+| Document                                       | Covers                                                  |
+|:-----------------------------------------------|:--------------------------------------------------------|
+| [porting.md](porting.md)                       | The C64 port plan: decisions, memory map, phases, risks |
+| [platform_layer.md](platform_layer.md)         | The C64 platform interface, routine by routine          |
+| [quirks.md](quirks.md)                         | Places where the original does something unintended     |
+| [CHANGELOG.md](../CHANGELOG.md)                | Release history                                         |
+| [html_documentation.md](html_documentation.md) | Regenerating the figures, screenshots and the handbook  |
+| [credits.md](credits.md)                       | Who made the game and this repository; tools and links  |
 
 ---
 
@@ -45,6 +47,6 @@ reads offline in a browser.
 | [oric_history.md](oric_history.md) | History of Oric: Tangerine, the models, clones, community |
 | [oric_specs.md](oric_specs.md)     | Oric Tech Specs: hardware, graphics, sound, emulators     |
 
-Oric names and addresses follow the disassembly ([`oric/game.s`](../oric/game.s), [`oric/loader.s`](../oric/loader.s));
-the names come from `tools/symbols.py`. C64 names follow `c64/src/`. Where a C64 routine replaces an Oric one it keeps
-the Oric name.
+Oric names and addresses follow the disassembly ([`oric/game.s`](../oric/game.s), [`oric/loader.s`](../oric/loader.s)),
+and the names themselves come from `tools/symbols.py`. C64 names follow `c64/src/`. Where a C64 routine replaces an
+Oric one, it keeps the Oric name.

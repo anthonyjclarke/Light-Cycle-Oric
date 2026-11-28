@@ -1,8 +1,9 @@
 # Light Cycle – Sound
 
-The Oric game has no music: it has two engine drones, a start-of-round sweep, a volume test tone and an explosion. All
-of it is written straight to the AY-3-8912 through the VIA (`AyWrite`, `AyLoadAll`). The C64 version replaces each with
-a SID routine in `c64/src/sound.s`. No recordings yet: the C64 sounds have only been checked to build, not tuned by ear.
+There's no music in the Oric game, just two engine drones, a start-of-round sweep, a volume test tone and an explosion.
+All of it is written straight to the AY-3-8912 through the VIA (`AyWrite`, `AyLoadAll`), and the C64 version replaces
+each one with a SID routine in `c64/src/sound.s`. I haven't made any recordings yet. So far the C64 sounds have only
+been checked to build, not tuned by ear.
 
 ---
 
@@ -21,15 +22,15 @@ because AY port A carries the keyboard column select. `AyLoadAll` writes R0–R1
 
 An AY tone of period P plays at 1 MHz ÷ 16P, so the engines drone at about 41 Hz, rising to 54 Hz while boosting.
 `EngineSound` only retunes a channel when that player's boost state changes. The explosion table sets noise period `$1F`
-(the lowest), envelope period `$1904` and shape `$01`, a single decay of about 1.6 s. It is skipped when the volume is
-0.
+(the lowest), envelope period `$1904` and shape `$01`, which gives a single decay of about 1.6 s. The explosion sound is
+skipped when the volume is 0.
 
 ---
 
 ## The SID Equivalents
 
 The SID value for frequency f is f × 2²⁴ ÷ 985248 on a PAL machine, so an AY period P becomes `1064250 / P` (`SIDFREQ`
-in `sound.s`). NTSC machines play about 4% sharp; that is not corrected.
+in `sound.s`). NTSC machines play about 4% sharp, and I haven't corrected for that.
 
 | Oric           | C64            | How                                                          |
 |:---------------|:---------------|:-------------------------------------------------------------|
@@ -38,5 +39,5 @@ in `sound.s`). NTSC machines play about 4% sharp; that is not corrected.
 | `Explosion`    | `ExplosionSfx` | Voice 3 noise, decay 1.5 s to sustain 0; engines gated off    |
 | R8/R9 volume   | `SetVolume`    | SID master volume `$D418`, also 0–15                         |
 
-The engines use the SID's envelope only as a gate (attack 0, sustain 15), as the AY tones had fixed volume. Demo mode
-runs with the volume at 0, so it is silent and, as on the Oric with no volume, skips the start sweep.
+The engines only use the SID's envelope as a gate (attack 0, sustain 15), because the AY tones had a fixed volume. Demo
+mode runs with the volume at 0, so it's silent, and like the Oric at volume 0 it skips the start sweep.

@@ -1,7 +1,7 @@
 # Light Cycle – Original Quirks
 
-Places where the Oric code does something unintended or fragile, read from the disassembly, with what the C64 port does
-about each. None is visible to a player as far as the code shows.
+These are the places where my Oric code does something unintended or fragile, read from the disassembly, along with
+what the C64 port does about each one. As far as the code shows, none of them is visible to a player.
 
 ---
 
@@ -25,7 +25,7 @@ about each. None is visible to a player as far as the code shows.
 
 ## Notes
 
-**1.** `SP` is set only at cold start. Each crash leaves `MovePlayer`'s and `PlotCheckCrash`'s return addresses on the
+**1.** `SP` is only set at cold start. Each crash leaves `MovePlayer`'s and `PlotCheckCrash`'s return addresses on the
 stack, and `GameOver` never resets it either. The 6502 stack wraps within page 1, so nothing breaks. On the C64,
 `PlotCheckCrash` sets `zCrashed` and returns from `MovePlayer`, and the game loop tests the flag.
 
@@ -34,21 +34,21 @@ always set (equal). It works by accident.
 
 **3.** `FrameDelay` waits `zSpeed` × 256 loop passes on top of the frame's work. Pixel plotting divides by 6 in a loop,
 so frames with more drawing run slower. The C64 version measures the Oric's frame times and runs Oric frames against a
-time budget on each raster tick, so the speed matches the Oric's on average without its jitter
+time budget on each raster tick, so on average the speed matches the Oric's, without the jitter
 ([porting.md](porting.md)).
 
 **5.** The ninth entry (`$B8E0`) is never shown or compared.
 
-**7.** Leaving `zSlowP1` at `$FF` makes the next `EngineSound` see a change and retune player 1's engine for a frame
-until `MovePlayer` sets it again. Harmless, but there is no reason to copy it.
+**7.** Leaving `zSlowP1` at `$FF` makes the next `EngineSound` see a change and retune player 1's engine for a frame,
+until `MovePlayer` sets it again. It's harmless, but there's no reason to copy it.
 
-**8.** `RoundStart` does not reset `zBonusState`, so a block that was animating when a cycle crashed finishes its
-animation at the same spot in the new arena, even over a new wall or a start position.
+**8.** `RoundStart` doesn't reset `zBonusState`, so a block that was animating when a cycle crashed finishes its
+animation at the same spot in the new arena, even if that's over a new wall or a start position.
 
 **9.** Each explosion particle unplots its previous pixel, so it leaves small gaps in trails, walls and the arena frame.
-A cycle can later pass through such a gap.
+A cycle can later pass through one of those gaps.
 
-**10.** `AddDigit` ripples a carry left with `DEY` / `BPL`; past digit 0 it stores at offset `$FF`. A score would need
-to pass 99,999,999 first.
+**10.** `AddDigit` ripples a carry to the left with `DEY` / `BPL`; past digit 0 it stores at offset `$FF`. A score
+would have to pass 99,999,999 first.
 
 **11.** `DecideWinner` declares player 1 the winner unless player 2's score is strictly higher.

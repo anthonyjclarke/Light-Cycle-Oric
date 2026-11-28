@@ -49,9 +49,9 @@ they cross.
 
 ## C64 Build
 
-The intro picture is new to the C64 version: a multicolour bitmap after the original PSS cassette inlay, drawn by
-`tools/make_intro.py` with the PSS logo decoded from the tape. Below is the generator's preview (pixels doubled in
-width, as multicolour mode shows them), then the picture as VICE shows it.
+The intro picture is new in the C64 version. It's a multicolour bitmap based on the original PSS cassette inlay, drawn
+by `tools/make_intro.py` with the PSS logo decoded from the tape. Below is the generator's preview (pixels doubled in
+width, as multicolour mode shows them), and then the picture as VICE shows it.
 
 ![The intro picture as generated, in Pepto's palette](images/graphics/intro-design.png)
 
@@ -81,17 +81,18 @@ The Oric shows its arena on a 240×200 HIRES screen, and the last three lines of
 writes its status into those three rows (`DrawStatusLine`, $0BC4, from `StatusText`, $0454), across the full width under
 the arena, as the long review photographed it in 1983 ([original_release.md](original_release.md)).
 
-The photograph is too soft to read. Here is the same screen captured from the running game (one player against the
+The photograph is too soft to read, so here's the same screen captured from the running game (one player against the
 computer, partway into a round; pixels ×2), with the Oric's own ROM font:
 
 ![The Oric game screen, captured from the running game](images/original/oric-game-screen.png)
 
-The figures below are a replica built from the game itself, to tie each part of that screen to the disassembly:
-`render_graphics.py` runs the Oric's `ResetScores`, `ResetTime`, `RoundStart` and the first frames of `GameLoop` on
-the 6502 core in `tools/cpu6502.py`, then draws the resulting HIRES memory and status rows with the Oric's serial
-attributes (ink, paper, double height). The arena, wedges, trails, colours, icon and layout are therefore the
-original's, byte for byte. One thing is not: the Oric ROM font is not on the tape, so letters and digits use the C64
-font squeezed to the Oric's five-pixel width. The round is chosen to have black paper, as in the capture.
+The figures below are a replica built from the game itself, so that each part of that screen ties back to the
+disassembly. `render_graphics.py` runs the Oric's `ResetScores`, `ResetTime`, `RoundStart` and the first frames of
+`GameLoop` on the 6502 core in `tools/cpu6502.py`, then draws the resulting HIRES memory and status rows with the
+Oric's serial attributes (ink, paper, double height). That makes the arena, wedges, trails, colours, icon and layout
+the original's, byte for byte. The letters are the exception: the Oric ROM font isn't on the tape, so letters and
+digits use the C64 font squeezed to the Oric's five-pixel width. I picked a round with black paper to match the
+capture.
 
 ![Replica of the Oric screen the review photographed (one-player game, a few frames in; pixels ×3)](images/graphics/oric-screen.png)
 
@@ -109,10 +110,10 @@ end of a match the winner's name is toggled in inverse 25 times.
 
 ### The C64 Version
 
-The C64 has no spare rows: its bitmap is 320×200, and the arena's 200 lines fill it. What it has is width. The arena
-keeps the Oric's 240-pixel coordinates, centred, which leaves 40 pixels (five character cells) each side. So each
-player's half of the status rows is stacked in the panel on their side, at the foot of the panel as the rows were at
-the foot of the Oric screen (`hud.s`):
+The C64 has no spare rows. Its bitmap is 320×200, and the arena's 200 lines fill it, but it does have extra width. The
+arena keeps the Oric's 240-pixel coordinates, centred, which leaves 40 pixels (five character cells) each side. So each
+player's half of the status rows is stacked in the panel on their side, at the foot of the panel, just as the rows sat
+at the foot of the Oric screen (`hud.s`):
 
 ![The C64 panels, left and right, from a demo capture (pixels ×4)](images/graphics/status-c64.png)
 
@@ -138,8 +139,8 @@ Oric's.
 | Six `TIME` digits, eight per score  | Five of each shown                   | Five cells; all eight digits are kept   |
 | Text characters with attributes     | Glyphs drawn into the bitmap         | The C64 bitmap has no text rows         |
 
-Two other layouts were considered and rejected. Shrinking the arena to make room under it would change the game: every
-coordinate, wall and wedge position, and the computer's play, depend on the 240×200 grid. Opening the lower border to
-show the rows with sprites would need a raster-timed border trick, eight sprites too few to carry 40 characters, and
-separate PAL and NTSC timing; it adds a lot of code for the same information. The panels use space the C64 otherwise
-leaves empty and keep the Oric's arena exactly.
+I looked at two other layouts and turned both down. Shrinking the arena to make room under it would change the game,
+because every coordinate, wall and wedge position, and the computer's play, depend on the 240×200 grid. Opening the
+lower border to show the rows with sprites would need a raster-timed border trick and separate PAL and NTSC timing, and
+eight sprites are too few to carry 40 characters anyway. That's a lot of code for the same information. The panels use
+space the C64 would otherwise leave empty, and they keep the Oric's arena exactly as it was.

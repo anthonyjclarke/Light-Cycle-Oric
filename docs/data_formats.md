@@ -1,6 +1,7 @@
 # Light Cycle – Data Formats
 
-The tape format and the Oric game's tables, read from the code. Labels are the disassembly's (`tools/symbols.py`).
+This is the tape format and the Oric game's tables, read from the code. Labels are the disassembly's
+(`tools/symbols.py`).
 
 ---
 

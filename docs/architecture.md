@@ -1,7 +1,7 @@
 # Light Cycle – Architecture
 
-How the Oric original is put together, read from the disassembly, and how the C64 port is laid out. Oric addresses are
-48K addresses; the 16K behaviour is covered below.
+This chapter covers how the Oric original is put together, as read from the disassembly, and how the C64 port is laid
+out. Oric addresses are 48K addresses; the 16K behaviour is covered below.
 
 ---
 
@@ -34,9 +34,9 @@ The game makes no ROM calls. It drives the hardware itself and borrows a few ROM
 straight from the matrix by `ReadKeysP1` and `ReadKeysP2`. A crash calls `ViaRestoreRom`, which recreates the ROM's 100
 Hz timer setup, so the menus and name entry can use the ROM keyboard again.
 
-The "16K OR 48K" line in the BASIC stub works, probably, because a 16K Oric repeats its RAM through the address space:
-HIRES `$A000` lands on `$2000` and the HIRES character set `$9800` on `$1800`, directly after the code. That is inferred
-from the addresses chosen, not tested.
+The "16K OR 48K" line in the BASIC stub probably works because a 16K Oric repeats its RAM through the address space:
+HIRES `$A000` lands on `$2000` and the HIRES character set `$9800` on `$1800`, directly after the code. I've worked that
+out from the addresses the game uses; I haven't tested it on a 16K machine.
 
 ---
 
@@ -56,7 +56,7 @@ from the addresses chosen, not tested.
 | `$BB80–$BFDF` | TEXT screen: menus and hi-scores                       |
 | `$BF68–$BFDF` | HIRES-mode text rows: names, `TIME`, lives, scores     |
 
-The character-set shuffle is the subtlest part. Entering HIRES, `CharsetToHires` copies `$B400–$BAFF` to `$9800–$9EFF`,
+The character-set shuffle is the trickiest part. Entering HIRES, `CharsetToHires` copies `$B400–$BAFF` to `$9800–$9EFF`,
 because the HIRES bitmap overlays the TEXT character set. Leaving it, `CharsetToText` copies it back. The hi-score table
 at `$B800` rides along in the alternate set's area. Before the copy back, `DecideWinner` stores the winner's score and
 name at `$9D00` and `$9D20`, so they arrive at `NEW_SCORE` and `NEW_NAME` (`$B900`, `$B920`) ready for `HiscoreEntry`.

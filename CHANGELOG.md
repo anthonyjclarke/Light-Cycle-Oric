@@ -2,6 +2,22 @@
 
 ---
 
+## [Unreleased] 28-11-2026 – Writing voice
+
+### Changed
+
+- I've rewritten the README and the chapters in my own voice: first person where the work is mine (the 1983 game, the
+  port, the toolkit and the open decisions), with the specs, tables and instructions left precise. This replaces the
+  third-person wording from the 17-11-2026 pass. The two Oric appendices (`oric_history.md`, `oric_specs.md`) are
+  unchanged, so they stay identical to *Hopper*'s copies.
+- Oric-Mon, carried over from *Hopper*: a new Oric-Mon section in `original_release.md` (the monitor I typed both games
+  in with, its two releases on oric.org and its place as the next restoration), and the README, docs index and
+  `credits.md` now name it as the monitor *Light Cycle* was entered with.
+- `credits.md`: the reconstruction is my personal project (the "who did what" placeholder is gone), and the toolkit
+  section credits John Marshall for *The Ultra* and notes that I pulled *Oric-Mon* together.
+
+---
+
 ## [Unreleased] 17-11-2026 – Original release material, Oric-style panels
 
 ### Added
